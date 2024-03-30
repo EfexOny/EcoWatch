@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579889301523",
+    "project_id": "ecowatch-e1cfc",
+    "storage_bucket": "ecowatch-e1cfc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579889301523:android:4a6bbb737b1dbfe9d217e6",
+        "android_client_info": {
+          "package_name": "com.example.da"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjZD6WeUU4JrRQyHt9LDXeFDHQ_GJ1T7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
