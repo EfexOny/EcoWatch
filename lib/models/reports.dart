@@ -1,11 +1,13 @@
 class Reports{
   final String desc;
   final String email;
+  final String type;
   final DateTime time;
 
   Reports({
     required this.desc,
     required this.email,
+    required this.type,
     required this.time
   });
 
@@ -13,6 +15,7 @@ class Reports{
     return {
         "desc": this.desc,
         "email": this.email,
+        "type": this.type,
         "time": this.time
     };
 }
