@@ -49,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
         password: _parola.text.trim(),
       );
       
-      Users us = Users(email: _email.text.trim());
+      Users us = Users(email: _email.text.trim(),status: "normal");
 
       db.collection("users").add(us.toJson());
       

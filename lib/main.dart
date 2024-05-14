@@ -10,7 +10,9 @@ void main() async {
     options: FirebaseOptions(apiKey: "AIzaSyBTgkL7ChQaYhRm2F15zRQnGbDY-jn4SGE", 
     appId: "1:579889301523:web:684f2324998d3ef4d217e6", 
     messagingSenderId: "579889301523", 
-    projectId: "ecowatch-e1cfc")
+    projectId: "ecowatch-e1cfc",
+    storageBucket: "ecowatch-e1cfc.appspot.com"
+    )
   );
   runApp(const MainApp());
 }

@@ -1,22 +1,24 @@
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timelines/timelines.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+class ReportsPage extends StatefulWidget {
+  const ReportsPage({super.key});
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<ReportsPage> createState() => _ReportsPageState();
 }
 final user = FirebaseAuth.instance.currentUser!;
-final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("email", isEqualTo:user.email!);
+final firestore = FirebaseFirestore;
+final reportsQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("status", isEqualTo:"Pending");
 
-class _HistoryPageState extends State<HistoryPage> {
+class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
   
@@ -34,10 +36,11 @@ class _HistoryPageState extends State<HistoryPage> {
           ),
           Expanded(child: 
               FirestoreListView<Map<String, dynamic>>(
-                padding: EdgeInsets.only(top: 8.0, left: 2.0, right: 2.0),
-              query: usersQuery,
+              query: reportsQuery,
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> user = snapshot.data();
+                String ReportId = snapshot.reference.id;
+                
 
                 // return Column(mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [Text('Type: ${user['type']}'),
@@ -47,7 +50,8 @@ class _HistoryPageState extends State<HistoryPage> {
                   
                 //   ,
                 // );
-              return Padding(
+                String formattedDate = user['time'].toString();
+                return Padding(
               padding: const EdgeInsets.only(bottom: 20,left: 20,right: 20),
               child: Container(
                 height: MediaQuery.of(context).size.height*0.20,
@@ -77,17 +81,41 @@ class _HistoryPageState extends State<HistoryPage> {
                           style: const TextStyle(fontSize: 16.0),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("Status: "),
-                            Text("${user["status"]}")
+                            TextButton(
+                              onPressed: () {
+                                 FirebaseFirestore.instance.collection("reports").doc(ReportId).update({"status": "Acceptat" });
+                              },
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding
+                                textStyle: const TextStyle(color: Colors.white), // Text color
+                              ),
+                              child: Text('Accept'),
+                            ),
+                            TextButton(
+                              onPressed: ()  {
+                                FirebaseFirestore.instance.collection("reports").doc(ReportId).update({"status": "Respins" });
+                              },
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding
+                                textStyle: const TextStyle(color: Colors.white), // Text color
+                              ),
+                              child: Text('Decline'),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                )));
+                ),
+
+
+
+                              // Text("${user['type']}"),
+                              //   Text("${user['desc']}",
+              ),
+            );
               },
             )
           )
