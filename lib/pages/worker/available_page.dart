@@ -74,7 +74,28 @@ class  _AvaialableWorkPageState extends State<AvaialableWorkPage> {
                           "${user['desc']}",
                           style: const TextStyle(fontSize: 16.0),
                         ),
-                        
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                             OutlinedButton(onPressed: () {
+                              print("View Photo");
+                            }, child: Text("View Photo",style: TextStyle(color: Colors.black),),
+                            style: ButtonStyle(
+                               shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+                               backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                            ),),
+                            
+
+                            OutlinedButton(onPressed: () {
+                              print("Accept");
+                            }, child: Text("Accept",style: TextStyle(color: Colors.black),),
+                            style: ButtonStyle(
+                               shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+                               backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                            ),),
+                          ],
+                        )
                       ],
                     ),
                   ),

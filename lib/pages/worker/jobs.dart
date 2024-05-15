@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da/pages/worker/active_page.dart';
 import 'package:da/pages/worker/available_page.dart';
 import 'package:da/pages/worker/history_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,9 +12,8 @@ class JobsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<Widget> _handleUserStatus(User user) async {
       final userStatus = await fetchMidmanStatus(user.email!);
-      print(userStatus);
       if (userStatus == 'Idle') {
-        return ActivePage(); 
+        return AvaialableWorkPage(); 
       } else {
         return AvaialableWorkPage();
       }

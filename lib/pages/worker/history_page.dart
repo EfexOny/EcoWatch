@@ -35,9 +35,6 @@ class _HistoryWorkPageState extends State<HistoryWorkPage> {
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> user = snapshot.data();
                 String ReportId = snapshot.reference.id;
-                
-    
-                String formattedDate = user['time'].toString();
                 return Padding(
               padding: const EdgeInsets.only(bottom: 20,left: 20,right: 20),
               child: Container(

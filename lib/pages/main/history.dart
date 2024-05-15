@@ -14,7 +14,7 @@ class HistoryPage extends StatefulWidget {
   State<HistoryPage> createState() => _HistoryPageState();
 }
 final user = FirebaseAuth.instance.currentUser!;
-final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("email", isEqualTo:user.email!);
+final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("selected", isEqualTo:user.email!).where("status",isEqualTo: "Resolved");
 
 class _HistoryPageState extends State<HistoryPage> {
   @override

@@ -28,6 +28,7 @@ class _HomePageState extends State<WorkerHome> {
 
   final List<Widget> _pages =[
    WorkerPage(),
+   HistoryPage(),
    JobsPage()
   ];
 
@@ -45,6 +46,7 @@ class _HomePageState extends State<WorkerHome> {
         animationDuration: Duration(milliseconds: 200),
         items: [
         Icon(Icons.home),
+        Icon(Icons.abc_rounded),
         Icon(Icons.map_outlined),
       ],),
       body: _pages[_Selindex],
