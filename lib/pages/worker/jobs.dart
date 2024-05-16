@@ -26,7 +26,7 @@ class JobsPage extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return snapshot.data ?? Container(); // Handle potential null case
+          return snapshot.data ?? Container(); 
         }
       },
     );
@@ -34,8 +34,6 @@ class JobsPage extends StatelessWidget {
 }
 
 Future<String> fetchMidmanStatus(String userEmail) async {
-  // Implement your logic to retrieve user status from Firebase here
-  // This example assumes a user collection with an "email" field and a "status" field
 
   try {
     final querySnapshot = await FirebaseFirestore.instance
@@ -46,13 +44,11 @@ Future<String> fetchMidmanStatus(String userEmail) async {
     if (querySnapshot.docs.isNotEmpty) {
       final docSnapshot = querySnapshot.docs.first;
       final data = docSnapshot.data();
-      return data?['work'] ?? 'Idle'; // Handle cases where 'status' is missing
+      return data?['work'] ?? 'Idle'; 
     } else {
-      // Handle case where user with the email is not found
       return 'unknown';
     }
   } catch (error) {
-    // Handle network errors or other exceptions
     print("Error fetching user status: $error");
     return 'unknown';
   }

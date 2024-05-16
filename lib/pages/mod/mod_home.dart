@@ -37,7 +37,7 @@ class _HomePageState extends State<ModHomePage> {
       
       CurvedNavigationBar(
         onTap: _Navigate,
-        backgroundColor: Colors.green.shade300,
+        backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
         color: Colors.green.shade500,
         animationCurve: Easing.legacy,
         animationDuration: Duration(milliseconds: 200),
