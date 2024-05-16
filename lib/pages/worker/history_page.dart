@@ -41,7 +41,7 @@ class _HistoryWorkPageState extends State<HistoryWorkPage> {
                 width: double.infinity,
                 decoration:BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
-                  color: Colors.blueGrey
+                  color: Colors.green.shade500
                   // gradient: LinearGradient(colors: [Colors.blueAccent,Colors.cyanAccent],begin:Alignment.topLeft ,end: Alignment.bottomLeft)
                 ) ,
     
@@ -63,19 +63,6 @@ class _HistoryWorkPageState extends State<HistoryWorkPage> {
                           "${user['desc']}",
                           style: const TextStyle(fontSize: 16.0),
                         ),
-
-                       Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          RawMaterialButton(onPressed: () {
-                          print("Accept");
-                        },
-                        child: 
-                          Text("Accept"),
-                          ),
-
-                       ],) 
-                        
-                        
                       ],
                     ),
                   ),

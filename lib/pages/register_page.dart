@@ -26,19 +26,39 @@ class _RegisterPageState extends State<RegisterPage> {
   // Email validation
   if (_email.text.trim().isEmpty) {
     ok = false;
-    print("Please enter your email address.");
+      ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(backgroundColor: Colors.red,
+              duration: Duration(seconds: 5),
+              content: Text('Introdu o adresa de email.'),
+            )
+          );
   } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z]*@[a-zA-Z0-9.-]*\.[a-zA-Z]{2,}$").hasMatch(_email.text.trim())) {
     ok = false;
-    print("Please enter a valid email address.");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(backgroundColor: Colors.red,
+            duration: Duration(seconds: 5),
+            content: Text('Introdu un email valid.'),
+          )
+        );
   }
 
   // Password validation (basic check)
   if (_parola.text.trim().isEmpty) {
     ok = false;
-    print("Please enter a password.");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red,
+          duration: Duration(seconds: 5),
+          content: Text('Pune o parola.'),
+        )
+      );
   } else if (_confirmParola.text.trim() != _parola.text.trim()) {
     ok = false;
-    print("Passwords do not match.");
+      ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(backgroundColor: Colors.red,
+              duration: Duration(seconds: 5),
+              content: Text('Nu sunt aceleasi parole.'),
+            )
+          );
   }
 
   if (ok) {
@@ -60,9 +80,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           }));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(backgroundColor: Colors.red,
+                duration: Duration(seconds: 5),
+                content: Text('Parola este prea slaba.'),
+              )
+            );
       } else if (e.code == 'email-already-in-use') {
-        print('The email address is already in use by another account.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(backgroundColor: Colors.red,
+              duration: Duration(seconds: 5),
+              content: Text('Email-ul este folosit deja de cineva.'),
+            )
+          );
       } else {
         print(e.message); 
       }

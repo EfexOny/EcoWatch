@@ -3,42 +3,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:popup_banner/popup_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WorkerPage extends StatefulWidget {
-  const WorkerPage({super.key});
+class ModAccountPage extends StatefulWidget {
+  const ModAccountPage({super.key});
 
   @override
-  State<WorkerPage> createState() => _AccountPageState();
+  State<ModAccountPage> createState() => _AccountPageState();
 }
-final utilizator = FirebaseAuth.instance.currentUser!;
-                      String smek = "";
 
-
-class _AccountPageState extends State<WorkerPage> {
+class _AccountPageState extends State<ModAccountPage> {
 
   final user = FirebaseAuth.instance.currentUser!;
 
 
-
-
   @override
   Widget build(BuildContext context) {
-  final query = FirebaseFirestore.instance.collection("reports").where("selected",isEqualTo: user.email!).where("status",isEqualTo: "Resolving");
+final reportsQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("status", isEqualTo:"Pending");
 
     return Scaffold(
-      body: Column(children: [
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           Card(user.email!),
 
-          SizedBox(height: 25),
-
-          Divider(thickness: 0.5,),
-
-          Text("Active",style: GoogleFonts.montserrat(
+          Divider(),
+          
+          Text("Verify",style: GoogleFonts.montserrat(
               fontSize: 36,
               color: Colors.black,
                 ),),
@@ -47,7 +42,7 @@ class _AccountPageState extends State<WorkerPage> {
             child: Container(
               height: 400,
               width: 400,
-              child: FirestoreListView(query: query, itemBuilder: (context, doc) {
+              child: FirestoreListView(query: reportsQuery, itemBuilder: (context, doc) {
                 QueryDocumentSnapshot<Map<String, dynamic>> user = doc;
                 return Container(
                   decoration: BoxDecoration(
@@ -56,7 +51,7 @@ class _AccountPageState extends State<WorkerPage> {
                   Text(user["type"]),
                   Text(user["desc"]),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(child: Icon(Icons.photo),
                       onTap: () { 
@@ -67,27 +62,8 @@ class _AccountPageState extends State<WorkerPage> {
                               }).show();
                       },
                       ),
-                      Spacer(),
                     
-                    OutlinedButton(onPressed: () {
-                      FirebaseFirestore.instance.collection("users").where("email",isEqualTo: utilizator.email).get()
-                              .then((value) {
-                                FirebaseFirestore.instance.collection("users").doc(value.docs.first.id).update({
-                                    "active": "false"
-                                });
-                              });
-                              
-                      FirebaseFirestore.instance.collection("reports").doc(doc.id).update(
-                        {
-                            "status": "Resolved",                          
-                        }
-                      );
-                      
-                              
-                        
-                    }, child: Text("Done")),
-
-                    Spacer(),
+                    Text(user["status"],style: TextStyle(fontSize: 20),),
 
                     GestureDetector(child: Icon(Icons.location_pin),
                     onTap:() {
@@ -99,26 +75,39 @@ class _AccountPageState extends State<WorkerPage> {
                       String URL = 'https://www.google.com/maps/search/?api=1&query=${locatie.latitude},${locatie.longitude}'; 
                       launch(URL);
                     } ,)
-                  ],)
-                ]
-                
-                ,),
+                  ],),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton(onPressed: () {
+                        FirebaseFirestore.instance.collection("reports").doc(doc.id).update({
+                          "status": "Acceptat"
+                        });
+                      }, child: Text("Accept")),
+                      OutlinedButton(onPressed: () {
+                        FirebaseFirestore.instance.collection("reports").doc(doc.id).update({
+                          "status": "Refuzat"
+                        });
+                      }, child: Text("Refuza")),
+                      
+                    ],
+                  ),
+                ],
+                ),
 
                 );
               },),
             ),
           )
-        
-            
 
-      ],),
+        ],
+      )
     );
   }
 }
 
 Widget Card(String text){
   return Padding(
-              padding: EdgeInsets.only(left: 20 ,right: 20,top: 40),
+              padding: EdgeInsets.only(left: 40 ,right: 20,top: 40),
               child: Container(
                       width: 300,
                       height: 120 ,

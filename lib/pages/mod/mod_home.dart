@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:da/pages/login_page.dart';
 import 'package:da/pages/main/account.dart';
 import 'package:da/pages/main/map.dart';
+import 'package:da/pages/mod/mod_account.dart';
 import 'package:da/pages/mod/reports.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _HomePageState extends State<ModHomePage> {
   }
 
   final List<Widget> _pages =[
-   AccountPage(),
+   ModAccountPage(),
    ReportsPage()
   ];
 

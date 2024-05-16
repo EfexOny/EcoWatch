@@ -32,6 +32,7 @@ final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('typ
           Card(user.email!),
 
           Divider(),
+
           Text("History",style: GoogleFonts.montserrat(
               fontSize: 36,
               color: Colors.black,
@@ -50,7 +51,7 @@ final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('typ
                   Text(user["type"]),
                   Text(user["desc"]),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(child: Icon(Icons.photo),
                       onTap: () { 
@@ -61,30 +62,21 @@ final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('typ
                               }).show();
                       },
                       ),
-                      Spacer(),
-                    
-                    Spacer(),
-
+                    Text(user["status"],style: TextStyle(fontSize: 20),),
                     GestureDetector(child: Icon(Icons.location_pin),
                     onTap:() {
-                      
                       GeoPoint locatie;
-
                       locatie = user["locatie"];
-
                       String URL = 'https://www.google.com/maps/search/?api=1&query=${locatie.latitude},${locatie.longitude}'; 
                       launch(URL);
                     } ,)
                   ],)
                 ]
-                
                 ,),
-
                 );
               },),
             ),
           )
-
         ],
       )
     );

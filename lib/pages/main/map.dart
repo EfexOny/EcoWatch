@@ -145,7 +145,7 @@ class _MapPageState extends State<MapPage> {
                                 await upImagine.putFile(File(catre)); 
                                 String downloadUrl = await upImagine.getDownloadURL();
                                 GeoPoint? location = await getCurrentLocation();
-                                Reports rep = Reports(desc: _desc.text.trim(), type: _type.text.trim(), email: user.email!, locatie: location, time: DateTime.now(),status: "Pending",Url: downloadUrl);
+                                Reports rep = Reports(desc: _desc.text.trim(), type: _type.text.trim(), email: user.email!, locatie: location,  selected: "Not assigned",time: DateTime.now(),status: "Pending",Url: downloadUrl);
                                 await db.collection("reports").add(rep.toJson());
                                 Navigator.pop(context, true);
                                 // Handle "Send" button press

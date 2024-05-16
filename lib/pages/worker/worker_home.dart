@@ -46,8 +46,8 @@ class _HomePageState extends State<WorkerHome> {
         animationDuration: Duration(milliseconds: 200),
         items: [
         Icon(Icons.home),
-        Icon(Icons.abc_rounded),
-        Icon(Icons.map_outlined),
+        Icon(Icons.history_outlined),
+        Icon(Icons.event_available_rounded),
       ],),
       body: _pages[_Selindex],
     );
