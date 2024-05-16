@@ -3,8 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:popup_banner/popup_banner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WorkerPage extends StatefulWidget {
   const WorkerPage({super.key});
@@ -50,13 +53,39 @@ class _AccountPageState extends State<WorkerPage> {
                   Text(user["type"]),
                   Text(user["desc"]),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      GestureDetector(child: Icon(Icons.photo),
+                      onTap: () { 
+                         final List<String> poze = [user["url"]]; 
+                              PopupBanner(useDots: false,
+                                context: context, images: poze, onClick: (index) {
+                                print(index);
+                              }).show();
+                      },
+                      ),
+                      Spacer(),
                     
                     OutlinedButton(onPressed: () {
-                      // TO DO 
-                    }, child: Text("Done"))
+                      FirebaseFirestore.instance.collection("reports").doc(doc.id).update(
+                        {
+                            "status": "Resolved",                          
+                        }
+                      );
+                    }, child: Text("Done")),
 
+                    Spacer(),
+
+                    GestureDetector(child: Icon(Icons.location_pin),
+                    onTap:() {
+                      
+                      GeoPoint locatie;
+
+                      locatie = user["locatie"];
+
+                      String URL = 'https://www.google.com/maps/search/?api=1&query=${locatie.latitude},${locatie.longitude}'; 
+                      launch(URL);
+                    } ,)
                   ],)
                 ]
                 

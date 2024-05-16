@@ -73,9 +73,6 @@ class _MapPageState extends State<MapPage> {
             final markers = locations.map((location) => Marker(
               markerId: MarkerId(location.toString()),
               position: LatLng(location.latitude, location.longitude),
-              infoWindow: InfoWindow(
-                title: 'Report Location', // Customize title
-              ),
             )).toSet();
             return Stack(
               children: [
@@ -90,6 +87,8 @@ class _MapPageState extends State<MapPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        child: Icon(Icons.report),
         onPressed: () async {
           try {
             showDialog(
@@ -128,14 +127,7 @@ class _MapPageState extends State<MapPage> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-
-
-                              
-                                
-
-                            
-
-String nume = DateTime.now().millisecondsSinceEpoch.toString();
+                                String nume = DateTime.now().millisecondsSinceEpoch.toString();
 
 
                                 Reference reference = FirebaseStorage.instance.ref();
@@ -150,7 +142,7 @@ String nume = DateTime.now().millisecondsSinceEpoch.toString();
                                   print(e);
                                 }
 
-                                await upImagine.putFile(File(catre)); // Use await for asynchronous upload
+                                await upImagine.putFile(File(catre)); 
                                 String downloadUrl = await upImagine.getDownloadURL();
                                 GeoPoint? location = await getCurrentLocation();
                                 Reports rep = Reports(desc: _desc.text.trim(), type: _type.text.trim(), email: user.email!, locatie: location, time: DateTime.now(),status: "Pending",Url: downloadUrl);

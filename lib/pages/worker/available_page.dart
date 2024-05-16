@@ -5,6 +5,7 @@ import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:popup_banner/popup_banner.dart';
 
 class AvaialableWorkPage extends  StatefulWidget {
   const AvaialableWorkPage({super.key});
@@ -12,7 +13,7 @@ class AvaialableWorkPage extends  StatefulWidget {
   @override
   State<AvaialableWorkPage>  createState() => _AvaialableWorkPageState();
 }
-final user = FirebaseAuth.instance.currentUser!;
+final utilizator = FirebaseAuth.instance.currentUser!;
 final firestore = FirebaseFirestore;
 final reportsQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("status", isEqualTo:"Acceptat");
 
@@ -42,9 +43,6 @@ class  _AvaialableWorkPageState extends State<AvaialableWorkPage> {
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> user = snapshot.data();
                 String ReportId = snapshot.reference.id;
-                
-
-                String formattedDate = user['time'].toString();
                 return Padding(
               padding: const EdgeInsets.only(bottom: 20,left: 20,right: 20),
               child: Container(
@@ -79,7 +77,11 @@ class  _AvaialableWorkPageState extends State<AvaialableWorkPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                              OutlinedButton(onPressed: () {
-                              print("View Photo");
+                              final List<String> poze = [user["url"]]; 
+                              PopupBanner(useDots: false,
+                                context: context, images: poze, onClick: (index) {
+                                print(index);
+                              }).show();
                             }, child: Text("View Photo",style: TextStyle(color: Colors.black),),
                             style: ButtonStyle(
                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
@@ -88,7 +90,13 @@ class  _AvaialableWorkPageState extends State<AvaialableWorkPage> {
                             
 
                             OutlinedButton(onPressed: () {
-                              print("Accept");
+                              
+                              FirebaseFirestore.instance.collection("reports").doc(snapshot.id).update({
+                                "selected": utilizator.email!,
+                                "status": "Resolving"
+                              });
+                              
+
                             }, child: Text("Accept",style: TextStyle(color: Colors.black),),
                             style: ButtonStyle(
                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),

@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:da/pages/login_page.dart';
 import 'package:da/pages/main/account.dart';
-import 'package:da/pages/main/history.dart';
 import 'package:da/pages/main/map.dart';
 import 'package:da/pages/mod/reports.dart';
+import 'package:da/pages/worker/history_page.dart';
 import 'package:da/pages/worker/jobs.dart';
 import 'package:da/pages/worker/workeraccount_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +28,7 @@ class _HomePageState extends State<WorkerHome> {
 
   final List<Widget> _pages =[
    WorkerPage(),
-   HistoryPage(),
+   HistoryWorkPage(),
    JobsPage()
   ];
 

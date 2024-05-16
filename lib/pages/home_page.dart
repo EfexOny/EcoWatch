@@ -1,7 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:da/pages/login_page.dart';
 import 'package:da/pages/main/account.dart';
-import 'package:da/pages/main/history.dart';
 import 'package:da/pages/main/map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages =[
    AccountPage(),
    MapPage(),
-   HistoryPage()
   ];
 
   @override
@@ -44,7 +42,6 @@ class _HomePageState extends State<HomePage> {
         items: [
         Icon(Icons.home),
         Icon(Icons.map_outlined),
-        Icon(Icons.history)
       ],),
       body: _pages[_Selindex],
     );

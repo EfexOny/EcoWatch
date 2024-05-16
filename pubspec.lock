@@ -693,6 +693,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  popup_banner:
+    dependency: "direct main"
+    description:
+      name: popup_banner
+      sha256: "6db86b01af4eef701804c1f8d8a9b8b5f601a7db4fd87a148f28ead5d4b04e22"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sanitize_html:
     dependency: transitive
     description:

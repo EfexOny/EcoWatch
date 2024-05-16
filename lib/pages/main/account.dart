@@ -1,7 +1,12 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:popup_banner/popup_banner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -17,19 +22,99 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('type').where("email", isEqualTo:user.email!);
+
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(child: Text("as: " + user.email!)),
-          MaterialButton(onPressed: (){
-              FirebaseAuth.instance.signOut();
-          },
-          color: Colors.amberAccent,
-          child: Text("Sign Out"),
+          Card(user.email!),
+
+          Divider(),
+          Text("History",style: GoogleFonts.montserrat(
+              fontSize: 36,
+              color: Colors.black,
+                ),),
+          Padding(
+            padding: const EdgeInsets.only(left: 40,right: 40),
+            child: Container(
+              height: 400,
+              width: 400,
+              child: FirestoreListView(query: usersQuery, itemBuilder: (context, doc) {
+                QueryDocumentSnapshot<Map<String, dynamic>> user = doc;
+                return Container(
+                  decoration: BoxDecoration(
+                  ),
+                  child: Column(children: [
+                  Text(user["type"]),
+                  Text(user["desc"]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(child: Icon(Icons.photo),
+                      onTap: () { 
+                         final List<String> poze = [user["url"]]; 
+                              PopupBanner(useDots: false,
+                                context: context, images: poze, onClick: (index) {
+                                print(index);
+                              }).show();
+                      },
+                      ),
+                      Spacer(),
+                    
+                    Spacer(),
+
+                    GestureDetector(child: Icon(Icons.location_pin),
+                    onTap:() {
+                      
+                      GeoPoint locatie;
+
+                      locatie = user["locatie"];
+
+                      String URL = 'https://www.google.com/maps/search/?api=1&query=${locatie.latitude},${locatie.longitude}'; 
+                      launch(URL);
+                    } ,)
+                  ],)
+                ]
+                
+                ,),
+
+                );
+              },),
+            ),
           )
+
         ],
       )
     );
   }
+}
+
+Widget Card(String text){
+  return Padding(
+              padding: EdgeInsets.only(left: 40 ,right: 20,top: 40),
+              child: Container(
+                      width: 300,
+                      height: 120 ,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade500,
+                        borderRadius: BorderRadius.circular(16)),
+                      child:Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(text,overflow: TextOverflow.fade,),
+                          OutlinedButton(
+                            onPressed: () { 
+                                FirebaseAuth.instance.signOut();
+                          }, 
+                          child: Text(" Sign out",style: TextStyle(color: Colors.black),),
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+                          ),
+                          )
+                        ],
+                      )
+                ),
+            );
 }
