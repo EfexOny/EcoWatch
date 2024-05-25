@@ -33,10 +33,10 @@ final usersQuery = FirebaseFirestore.instance.collection('reports').orderBy('typ
 
           Divider(),
 
-          Text("History",style: GoogleFonts.montserrat(
+         Text("History",style: GoogleFonts.montserrat(
               fontSize: 36,
               color: Colors.black,
-                ),),
+               ),),
           Padding(
             padding: const EdgeInsets.only(left: 40,right: 40),
             child: Container(
